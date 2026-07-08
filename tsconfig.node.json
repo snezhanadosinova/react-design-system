@@ -15,7 +15,8 @@
 
     "strict": true
   },
-
+  
+"ignoreDeprecations": "6.0",
   "include": [
     "vite.config.ts",
     ".storybook/main.ts"
