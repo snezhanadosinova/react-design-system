@@ -1,0 +1,26 @@
+.badge {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+}
+
+.default {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.success {
+  background: var(--color-success);
+  color: white;
+}
+
+.warning {
+  background: var(--color-warning);
+  color: white;
+}
+
+.danger {
+  background: var(--color-danger);
+  color: white;
+}

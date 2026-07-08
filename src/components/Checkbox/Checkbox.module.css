@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: Inter, sans-serif;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.label {
+  font-size: 14px;
+  color: var(--color-text-primary);
+}

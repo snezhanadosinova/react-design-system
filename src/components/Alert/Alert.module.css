@@ -1,0 +1,25 @@
+.alert {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+}
+
+.info {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.success {
+  background: var(--color-success);
+  color: white;
+}
+
+.warning {
+  background: var(--color-warning);
+  color: white;
+}
+
+.error {
+  background: var(--color-danger);
+  color: white;
+}

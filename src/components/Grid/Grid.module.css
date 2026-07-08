@@ -1,0 +1,16 @@
+.grid {
+  display: grid;
+}
+
+/* gaps */
+.gap_sm {
+  gap: 8px;
+}
+
+.gap_md {
+  gap: 16px;
+}
+
+.gap_lg {
+  gap: 24px;
+}
