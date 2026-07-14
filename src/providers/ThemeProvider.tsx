@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
-import { lightTheme } from "../themes/light.js";
-import { darkTheme } from "../themes/dark.js";
-import { ThemeContext, type ThemeContextType, type ThemeMode } from "./themeContext.js";
+import { lightTheme } from "../themes/light";
+import { darkTheme } from "../themes/dark";
+import { ThemeContext, type ThemeMode } from "./themeContext";
 
 interface ThemeProviderProps {
   children: ReactNode;
@@ -15,7 +15,7 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [mode, setMode] = useState<ThemeMode>(defaultTheme);
 
-  const theme = useMemo<ThemeContextType["theme"]>(
+  const theme = useMemo(
     () => (mode === "light" ? lightTheme : darkTheme),
     [mode]
   );
@@ -25,7 +25,7 @@ export function ThemeProvider({
   }, [mode]);
 
   const toggleTheme = () => {
-    setMode((prev: ThemeMode) => (prev === "light" ? "dark" : "light"));
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   const setTheme = (nextMode: ThemeMode) => {

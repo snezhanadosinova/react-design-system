@@ -11,6 +11,8 @@
 
   --color-background: #ffffff;
   --color-surface: #f9fafb;
+  --color-surface-hover: #f3f4f6;
+  --color-overlay: rgba(0, 0, 0, 0.05);
 
   --color-border: #e5e7eb;
 
@@ -39,15 +41,12 @@
 }
 
 [data-theme="dark"] {
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-
   --color-background: #111827;
   --color-surface: #1f2937;
-
   --color-border: #374151;
-
   --color-text-primary: #f9fafb;
   --color-text-secondary: #d1d5db;
-  --color-text-inverse: #111827;
+  --color-text-inverse: #d1d5db;
+  --color-surface-hover: #374151;
+  --color-overlay: rgba(255, 255, 255, 0.08);
 }

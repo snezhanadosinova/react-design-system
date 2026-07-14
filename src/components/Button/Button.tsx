@@ -19,7 +19,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
+    <button data-test="my-button"
       className={[
         styles.button,
         styles[variant],

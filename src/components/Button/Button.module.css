@@ -10,7 +10,7 @@
 
 .primary {
   background: var(--color-primary);
-  color: white;
+  color: var(--color-text-inverse);
 }
 
 .primary:hover {
@@ -24,7 +24,7 @@
 }
 
 .secondary:hover {
-  background: #f3f4f6;
+ background: var(--color-surface-hover);
 }
 
 .ghost {
