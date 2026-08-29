@@ -1,8 +1,59 @@
 .grid {
   display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+}
+
+/* =========================================================
+   RESPONSIVE COLUMNS
+   ========================================================= */
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--grid-columns-sm, var(--grid-columns)),
+      minmax(0, 1fr)
+    );
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--grid-columns-md, var(--grid-columns-sm, var(--grid-columns))),
+      minmax(0, 1fr)
+    );
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(
+        --grid-columns-lg,
+        var(--grid-columns-md, var(--grid-columns-sm, var(--grid-columns)))
+      ),
+      minmax(0, 1fr)
+    );
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(
+        --grid-columns-xl,
+        var(
+          --grid-columns-lg,
+          var(--grid-columns-md, var(--grid-columns-sm, var(--grid-columns)))
+        )
+      ),
+      minmax(0, 1fr)
+    );
+  }
 }
 
 /* gaps */
+
 .gap_sm {
   gap: 8px;
 }

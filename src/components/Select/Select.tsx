@@ -1,4 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  type SelectHTMLAttributes,
+} from "react";
+import { useFormField } from "../FormField/FormFieldContext";
 import styles from "./Select.module.css";
 
 export type SelectOption = {
@@ -6,66 +10,86 @@ export type SelectOption = {
   value: string;
 };
 
-type SelectProps = {
+type SelectProps = Omit<
+  SelectHTMLAttributes<HTMLSelectElement>,
+  "children"
+> & {
   options: SelectOption[];
-  value?: string;
-  onChange?: (value: string) => void;
   placeholder?: string;
-  label?: string;
 };
 
-export function Select({
-  options,
-  value,
-  onChange,
-  placeholder = "Select...",
-  label,
-}: SelectProps) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+export const Select = forwardRef<
+  HTMLSelectElement,
+  SelectProps
+>(function Select(
+  {
+    options,
+    placeholder,
+    id,
+    className,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
+    "aria-required": ariaRequired,
+    ...props
+  },
+  ref,
+) {
+  const field = useFormField();
 
-  const selected = options.find((o) => o.value === value);
+  const selectId = id ?? field?.id;
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
+  const describedBy =
+    ariaDescribedBy ??
+    field?.messageId;
 
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  const invalid =
+    ariaInvalid ??
+    (field?.error ? true : undefined);
+
+  const required =
+    ariaRequired ??
+    (field?.required ? true : undefined);
 
   return (
-    <div className={styles.wrapper} ref={ref}>
-      {label && <div className={styles.label}>{label}</div>}
+    <div className={styles.wrapper}>
+      <div className={styles.selectWrapper}>
+        <select
+          ref={ref}
+          id={selectId}
+          className={[
+            styles.select,
+            className ?? "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          aria-describedby={describedBy}
+          aria-invalid={invalid}
+          aria-required={required}
+          {...props}
+        >
+          {placeholder && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
 
-      <div className={styles.control} onClick={() => setOpen((v) => !v)}>
-        {selected ? selected.label : placeholder}
-
-        <span className={styles.arrow}>▾</span>
-      </div>
-
-      {open && (
-        <div className={styles.dropdown}>
-          {options.map((opt) => (
-            <div
-              key={opt.value}
-              className={[
-                styles.option,
-                opt.value === value ? styles.active : "",
-              ].join(" ")}
-              onClick={() => {
-                onChange?.(opt.value);
-                setOpen(false);
-              }}
+          {options.map((option) => (
+            <option
+              key={option.value}
+              value={option.value}
             >
-              {opt.label}
-            </div>
+              {option.label}
+            </option>
           ))}
-        </div>
-      )}
+        </select>
+
+        <span
+          className={styles.arrow}
+          aria-hidden="true"
+        >
+          ▾
+        </span>
+      </div>
     </div>
   );
-}
+});

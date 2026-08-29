@@ -4,7 +4,45 @@
   color: var(--color-text-primary);
 }
 
-/* Variants */
+/* ========== COLORS ========== */
+
+.primary {
+  color: var(--color-text-primary);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.success {
+  color: var(--color-success);
+}
+
+.warning {
+  color: var(--color-warning);
+}
+
+.danger {
+  color: var(--color-danger);
+}
+
+.info {
+  color: var(--color-info);
+}
+
+.inverse {
+  color: var(--color-text-inverse);
+}
+
+.light {
+  color: var(--color-text-light);
+}
+
+.dark {
+  color: var(--color-text-dark);
+}
+/* ========== VARIANTS ========== */
+
 .body {
   font-size: 16px;
   line-height: 1.5;
@@ -41,10 +79,10 @@
 .caption {
   font-size: 12px;
   line-height: 1.3;
-  color: var(--color-text-secondary);
 }
 
-/* Weights */
+/* ========== WEIGHTS ========== */
+
 .regular {
   font-weight: 400;
 }

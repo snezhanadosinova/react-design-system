@@ -1,7 +1,7 @@
-import { HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import styles from "./Text.module.css";
 
-type TextVariant =
+export type TextVariant =
   | "body"
   | "body-sm"
   | "body-lg"
@@ -10,30 +10,46 @@ type TextVariant =
   | "heading-3"
   | "caption";
 
-type TextWeight = "regular" | "medium" | "semibold" | "bold";
+export type TextWeight = "regular" | "medium" | "semibold" | "bold";
 
-type TextProps = HTMLAttributes<HTMLElement> & {
-  as?: keyof JSX.IntrinsicElements;
+export type TextColor =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "inverse" | "light" | "dark";
+
+export type TextProps = HTMLAttributes<HTMLElement> & {
+  as?: React.ElementType;
   children: ReactNode;
   variant?: TextVariant;
   weight?: TextWeight;
+  color?: TextColor;
 };
 
 export function Text({
   as: Component = "span",
   variant = "body",
   weight = "regular",
+  color = "primary",
   className,
   children,
   ...props
 }: TextProps) {
+  const classes = [
+    styles.text,
+    styles[variant],
+    styles[weight],
+    styles[color],
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <Component
-      className={`${styles.text} ${styles[variant]} ${styles[weight]} ${
-        className ?? ""
-      }`}
-      {...props}
-    >
+    <Component className={classes} {...props}>
       {children}
     </Component>
   );

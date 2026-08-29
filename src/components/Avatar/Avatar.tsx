@@ -1,9 +1,60 @@
 import styles from "./Avatar.module.css";
 
-type AvatarProps = {
+export type AvatarSize = "sm" | "md" | "lg";
+
+export type AvatarProps = {
   name: string;
+  src?: string;
+  size?: AvatarSize;
 };
 
-export function Avatar({ name }: AvatarProps) {
-  return <div className={styles.avatar}>{name[0]}</div>;
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/);
+
+  if (!parts[0]) {
+    return "?";
+  }
+
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase();
+  }
+
+  return (
+    parts[0][0] +
+    parts[parts.length - 1][0]
+  ).toUpperCase();
+}
+
+export function Avatar({
+  name,
+  src,
+  size = "md",
+}: AvatarProps) {
+  const initials = getInitials(name);
+
+  if (src) {
+    return (
+      <img
+        className={[
+          styles.avatar,
+          styles[`size_${size}`],
+        ].join(" ")}
+        src={src}
+        alt={name}
+      />
+    );
+  }
+
+  return (
+    <div
+      className={[
+        styles.avatar,
+        styles[`size_${size}`],
+      ].join(" ")}
+      role="img"
+      aria-label={name}
+    >
+      {initials}
+    </div>
+  );
 }

@@ -1,26 +1,73 @@
 .badge {
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: var(--radius-full);
   display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
+/* =========================================================
+   DEFAULT
+   ========================================================= */
+
 .default {
-  background: var(--color-surface);
-  color: var(--color-text-primary);
+  background: var(--color-secondary);
+  color: var(--color-text-inverse);
 }
+
+/* =========================================================
+   SUCCESS
+   ========================================================= */
 
 .success {
   background: var(--color-success);
-  color: white;
+  color: var(--color-text-inverse);
 }
+
+/* =========================================================
+   WARNING
+   ========================================================= */
 
 .warning {
   background: var(--color-warning);
-  color: white;
+  color: var(--color-text-inverse);
 }
+
+/* =========================================================
+   DANGER
+   ========================================================= */
 
 .danger {
   background: var(--color-danger);
-  color: white;
+  color: var(--color-text-inverse);
+}
+
+/* =========================================================
+   INVERSE
+   ========================================================= */
+
+.default-inverse {
+  background: var(--color-text-primary);
+  color: var(--color-text-inverse);
+}
+
+.success-inverse {
+  background: var(--color-surface);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.warning-inverse {
+  background: var(--color-surface);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+}
+
+.danger-inverse {
+  background: var(--color-surface);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
 }

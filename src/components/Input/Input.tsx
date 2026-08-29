@@ -1,39 +1,82 @@
-import { InputHTMLAttributes, ReactNode } from "react";
+import {
+  forwardRef,
+  type InputHTMLAttributes,
+  type ReactNode,
+} from "react";
+import { useFormField } from "../FormField/FormFieldContext";
 import styles from "./Input.module.css";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  label?: string;
-  error?: string;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-};
+type InputProps =
+  InputHTMLAttributes<HTMLInputElement> & {
+    leftIcon?: ReactNode;
+    rightIcon?: ReactNode;
+  };
 
-export function Input({
-  label,
-  error,
-  leftIcon,
-  rightIcon,
-  className,
-  ...props
-}: InputProps) {
+export const Input = forwardRef<
+  HTMLInputElement,
+  InputProps
+>(function Input(
+  {
+    leftIcon,
+    rightIcon,
+    className,
+    id,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
+    "aria-required": ariaRequired,
+    ...props
+  },
+  ref,
+) {
+  const field = useFormField();
+
+  const inputId = id ?? field?.id;
+
+  const describedBy =
+    ariaDescribedBy ??
+    field?.messageId;
+
+  const invalid =
+    ariaInvalid ??
+    (field?.error ? true : undefined);
+
+  const required =
+    ariaRequired ??
+    (field?.required ? true : undefined);
+
   return (
     <div className={styles.wrapper}>
-      {label && <label className={styles.label}>{label}</label>}
+      <div className={styles.inputContainer}>
+        {leftIcon && (
+          <span
+            className={styles.icon}
+            aria-hidden="true"
+          >
+            {leftIcon}
+          </span>
+        )}
 
-      <div
-        className={[
-          styles.inputContainer,
-          error ? styles.error : "",
-        ].join(" ")}
-      >
-        {leftIcon && <span className={styles.icon}>{leftIcon}</span>}
+        <input
+          ref={ref}
+          id={inputId}
+          className={[
+            styles.input,
+            className ?? "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          aria-describedby={describedBy}
+          aria-invalid={invalid}
+          aria-required={required}
+          {...props}
+        />
 
-        <input className={`${styles.input} ${className ?? ""}`} {...props} />
-
-        {rightIcon && <span className={styles.icon}>{rightIcon}</span>}
+        {rightIcon && (
+          <span className={styles.icon}>
+            {rightIcon}
+          </span>
+        )}
       </div>
-
-      {error && <span className={styles.errorText}>{error}</span>}
     </div>
   );
-}
+});

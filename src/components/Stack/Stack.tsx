@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactNode } from "react";
 import styles from "./Stack.module.css";
 
-type StackProps = HTMLAttributes<HTMLDivElement> & {
+export type StackProps = HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
   direction?: "row" | "column";
   gap?: "sm" | "md" | "lg";
@@ -26,8 +26,10 @@ export function Stack({
         styles[`gap_${gap}`],
         styles[`align_${align}`],
         styles[`justify_${justify}`],
-        className ?? "",
-      ].join(" ")}
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       {...props}
     >
       {children}

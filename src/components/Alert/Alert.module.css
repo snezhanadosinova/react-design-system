@@ -1,25 +1,161 @@
 .alert {
-  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid;
   border-radius: var(--radius-md);
+  font-family: Inter, sans-serif;
   font-size: 14px;
+  line-height: 1.5;
 }
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.icon {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.message {
+  font-weight: 400;
+}
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin: -4px -4px 0 0;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  transition:
+    background-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.close:hover {
+  opacity: 1;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.close svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* =========================================================
+   INFO
+   ========================================================= */
 
 .info {
-  background: var(--color-surface);
-  color: var(--color-text-primary);
+  background: color-mix(
+    in srgb,
+    var(--color-info) 10%,
+    var(--color-background)
+  );
+
+  border-color: color-mix(
+    in srgb,
+    var(--color-info) 30%,
+    var(--color-background)
+  );
+
+  color: var(--color-info);
 }
+
+/* =========================================================
+   SUCCESS
+   ========================================================= */
 
 .success {
-  background: var(--color-success);
-  color: white;
+  background: color-mix(
+    in srgb,
+    var(--color-success) 10%,
+    var(--color-background)
+  );
+
+  border-color: color-mix(
+    in srgb,
+    var(--color-success) 30%,
+    var(--color-background)
+  );
+
+  color: var(--color-success);
 }
+
+/* =========================================================
+   WARNING
+   ========================================================= */
 
 .warning {
-  background: var(--color-warning);
-  color: white;
+  background: color-mix(
+    in srgb,
+    var(--color-warning) 10%,
+    var(--color-background)
+  );
+
+  border-color: color-mix(
+    in srgb,
+    var(--color-warning) 30%,
+    var(--color-background)
+  );
+
+  color: var(--color-warning);
 }
 
+/* =========================================================
+   ERROR
+   ========================================================= */
+
 .error {
-  background: var(--color-danger);
-  color: white;
+  background: color-mix(
+    in srgb,
+    var(--color-danger) 10%,
+    var(--color-background)
+  );
+
+  border-color: color-mix(
+    in srgb,
+    var(--color-danger) 30%,
+    var(--color-background)
+  );
+
+  color: var(--color-danger);
 }

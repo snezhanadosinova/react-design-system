@@ -6,7 +6,9 @@
   transition: all 0.2s ease;
 }
 
-/* ============ VARIANTS ============ */
+/* =========================================================
+   Variants
+   ========================================================= */
 
 .primary {
   background: var(--color-primary);
@@ -24,7 +26,7 @@
 }
 
 .secondary:hover {
- background: var(--color-surface-hover);
+  background: var(--color-surface-hover);
 }
 
 .ghost {
@@ -36,7 +38,45 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* ============ SIZES ============ */
+.success {
+  background: var(--color-success);
+  color: var(--color-text-inverse);
+}
+
+.success:hover {
+  background: var(--color-success-hover);
+}
+
+.danger {
+  background: var(--color-danger);
+  color: var(--color-text-inverse);
+}
+
+.danger:hover {
+  background: var(--color-danger-hover);
+}
+
+.warning {
+  background: var(--color-warning);
+  color: var(--color-text-inverse);
+}
+
+.warning:hover {
+  background: var(--color-warning-hover);
+}
+
+.info {
+  background: var(--color-info);
+  color: var(--color-text-inverse);
+}
+
+.info:hover {
+  background: var(--color-info-hover);
+}
+
+/* =========================================================
+   SIZES
+   ========================================================= */
 
 .sm {
   padding: 6px 10px;
@@ -53,7 +93,10 @@
   font-size: 16px;
 }
 
-/* ============ STATES ============ */
+/* =========================================================
+   STATES
+   ========================================================= */
+   
 
 .fullWidth {
   width: 100%;

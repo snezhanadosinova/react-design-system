@@ -1,4 +1,8 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import {
+  FormFieldContext,
+  type FormFieldContextValue,
+} from "./FormFieldContext";
 import styles from "./FormField.module.css";
 
 type FormFieldProps = {
@@ -6,31 +10,69 @@ type FormFieldProps = {
   error?: string;
   helperText?: string;
   required?: boolean;
-  children: ReactNode;
+  htmlFor?: string;
+  children?: ReactNode;
 };
 
 export function FormField({
   label,
   error,
   helperText,
-  required,
+  required = false,
+  htmlFor,
   children,
 }: FormFieldProps) {
+  const messageId = htmlFor
+    ? `${htmlFor}-message`
+    : undefined;
+
+  const contextValue: FormFieldContextValue = {
+    id: htmlFor,
+    error,
+    helperText,
+    required,
+    messageId,
+  };
+
   return (
-    <div className={styles.wrapper}>
-      {label && (
-        <label className={styles.label}>
-          {label} {required && <span className={styles.required}>*</span>}
-        </label>
-      )}
+    <FormFieldContext.Provider value={contextValue}>
+      <div className={styles.wrapper}>
+        {label && (
+          <label
+            htmlFor={htmlFor}
+            className={styles.label}
+          >
+            {label}
 
-      <div className={styles.control}>{children}</div>
+            {required && (
+              <span
+                className={styles.required}
+                aria-hidden="true"
+              >
+                *
+              </span>
+            )}
+          </label>
+        )}
 
-      {error && <div className={styles.error}>{error}</div>}
+        <div className={styles.control}>
+          {children}
+        </div>
 
-      {!error && helperText && (
-        <div className={styles.helper}>{helperText}</div>
-      )}
-    </div>
+        {(error || helperText) && (
+          <div
+            id={messageId}
+            className={
+              error
+                ? styles.error
+                : styles.helper
+            }
+            role={error ? "alert" : undefined}
+          >
+            {error || helperText}
+          </div>
+        )}
+      </div>
+    </FormFieldContext.Provider>
   );
 }

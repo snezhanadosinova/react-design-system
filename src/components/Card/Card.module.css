@@ -1,10 +1,14 @@
 .card {
+  box-sizing: border-box;
+  width: 100%;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
 }
 
-/* ========== PADDING ========== */
+/* =========================================================
+   PADDING
+   ========================================================= */
 
 .padding_none {
   padding: 0;
@@ -22,7 +26,9 @@
   padding: 24px;
 }
 
-/* ========== SHADOWS ========== */
+/* =========================================================
+   SHADOWS
+   ========================================================= */
 
 .shadow_none {
   box-shadow: none;
