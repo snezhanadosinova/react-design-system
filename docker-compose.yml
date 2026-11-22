@@ -11,6 +11,10 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - gh-config:/root/.config/gh
 
     stdin_open: true
     tty: true
+
+volumes:
+  gh-config:
