@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import {
   FormFieldContext,
   type FormFieldContextValue,
@@ -22,16 +22,16 @@ export function FormField({
   htmlFor,
   children,
 }: FormFieldProps) {
-  const messageId = htmlFor
-    ? `${htmlFor}-message`
-    : undefined;
+  const generatedId = useId();
+  const fieldId = htmlFor ?? generatedId;
+  const messageId = `${fieldId}-message`;
 
   const contextValue: FormFieldContextValue = {
-    id: htmlFor,
+    id: fieldId,
     error,
     helperText,
     required,
-    messageId,
+    messageId: error || helperText ? messageId : undefined,
   };
 
   return (
@@ -39,7 +39,7 @@ export function FormField({
       <div className={styles.wrapper}>
         {label && (
           <label
-            htmlFor={htmlFor}
+            htmlFor={fieldId}
             className={styles.label}
           >
             {label}
@@ -67,7 +67,8 @@ export function FormField({
                 ? styles.error
                 : styles.helper
             }
-            role={error ? "alert" : undefined}
+            role={error ? "status" : undefined}
+            aria-live={error ? "polite" : undefined}
           >
             {error || helperText}
           </div>

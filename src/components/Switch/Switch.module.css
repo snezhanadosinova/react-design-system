@@ -26,8 +26,8 @@
   position: relative;
   display: inline-flex;
   flex-shrink: 0;
-  width: 36px;
-  height: 20px;
+  width: 42px;
+  height: 24px;
 }
 
 .input {
@@ -57,10 +57,10 @@
 }
 
 .thumb {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-text-inverse);
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
   transform: translateX(0);
   transition: transform 0.2s ease;
@@ -71,7 +71,7 @@
 }
 
 .input:checked + .track .thumb {
-  transform: translateX(16px);
+  transform: translateX(18px);
 }
 
 .input:focus-visible + .track {

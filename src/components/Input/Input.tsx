@@ -1,9 +1,11 @@
 import {
   forwardRef,
+  useId,
   type InputHTMLAttributes,
   type ReactNode,
 } from "react";
 import { useFormField } from "../FormField/FormFieldContext";
+import { mergeDescribedBy } from "../../utils/accessibility";
 import styles from "./Input.module.css";
 
 type InputProps =
@@ -21,6 +23,7 @@ export const Input = forwardRef<
     rightIcon,
     className,
     id,
+    required: nativeRequired,
     "aria-describedby": ariaDescribedBy,
     "aria-invalid": ariaInvalid,
     "aria-required": ariaRequired,
@@ -29,18 +32,17 @@ export const Input = forwardRef<
   ref,
 ) {
   const field = useFormField();
+  const generatedId = useId();
 
-  const inputId = id ?? field?.id;
+  const inputId = id ?? field?.id ?? generatedId;
 
-  const describedBy =
-    ariaDescribedBy ??
-    field?.messageId;
+  const describedBy = mergeDescribedBy(ariaDescribedBy, field?.messageId);
 
   const invalid =
     ariaInvalid ??
     (field?.error ? true : undefined);
 
-  const required =
+  const ariaRequiredValue =
     ariaRequired ??
     (field?.required ? true : undefined);
 
@@ -67,7 +69,8 @@ export const Input = forwardRef<
             .join(" ")}
           aria-describedby={describedBy}
           aria-invalid={invalid}
-          aria-required={required}
+          required={nativeRequired ?? field?.required}
+          aria-required={ariaRequiredValue}
           {...props}
         />
 

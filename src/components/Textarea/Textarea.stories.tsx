@@ -78,6 +78,11 @@ export const Default: Story = {
         name: "description",
         placeholder: "Enter your description...",
     },
+    render: (args) => (
+        <FormField label="Description" htmlFor="description">
+            <Textarea {...args} />
+        </FormField>
+    ),
 };
 
 export const WithFormField: Story = {

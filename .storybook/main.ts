@@ -15,8 +15,6 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(ts|tsx|js|jsx)",
   ],
 
-  staticDirs: ["../public"],
-
   addons: [
     "@storybook/addon-docs",
     "@storybook/addon-a11y",

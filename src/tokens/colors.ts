@@ -2,74 +2,83 @@ export const colors = {
   light: {
     primary: "#2563eb",
     primaryHover: "#1d4ed8",
-
+    secondary: "#6b7280",
+    secondaryHover: "#4b5563",
     success: "#15803d",
     successHover: "#166534",
     successForeground: "#ffffff",
-
     warning: "#b45309",
     warningHover: "#92400e",
     warningForeground: "#ffffff",
-
     danger: "#dc2626",
     dangerHover: "#b91c1c",
     dangerForeground: "#ffffff",
-
     info: "#0369a1",
     infoHover: "#075985",
     infoForeground: "#ffffff",
-
     background: "#ffffff",
-    surface: "#f9fafb",
-    surfaceHover: "#f3f4f6",
-
-    border: "#e5e7eb",
+    backgroundSecondary: "#f9fafb",
+    backgroundTertiary: "#f3f4f6",
+    backgroundInverse: "#111827",
+    surface: "#ffffff",
+    surfaceHover: "#f9fafb",
+    surfaceActive: "#f3f4f6",
+    overlay: "rgba(0, 0, 0, 0.05)",
+    border: "#8792a2",
     borderMuted: "#f3f4f6",
-    borderStrong: "#d1d5db",
+    borderStrong: "#6b7280",
     borderFocus: "#2563eb",
-
     text: {
       primary: "#111827",
       secondary: "#6b7280",
       inverse: "#ffffff",
+      light: "#f9fafb",
+      dark: "#111827",
     },
+    accent1: "#667eea",
+    accent2: "#764ba2",
+    accent3: "#f093fb",
   },
-
   dark: {
     primary: "#60a5fa",
     primaryHover: "#93c5fd",
-
+    secondary: "#9ca3af",
+    secondaryHover: "#d1d5db",
     success: "#4ade80",
     successHover: "#86efac",
     successForeground: "#111827",
-
     warning: "#fbbf24",
     warningHover: "#fcd34d",
     warningForeground: "#111827",
-
     danger: "#f87171",
     dangerHover: "#fca5a5",
     dangerForeground: "#111827",
-
     info: "#38bdf8",
     infoHover: "#7dd3fc",
     infoForeground: "#111827",
-
     background: "#111827",
+    backgroundSecondary: "#1f2937",
+    backgroundTertiary: "#374151",
+    backgroundInverse: "#ffffff",
     surface: "#1f2937",
     surfaceHover: "#374151",
-
-    border: "#374151",
+    surfaceActive: "#4b5563",
+    overlay: "rgba(255, 255, 255, 0.08)",
+    border: "#6b7280",
     borderMuted: "#1f2937",
     borderStrong: "#4b5563",
-    borderFocus: "#60a5fa",
-
+    borderFocus: "#3b82f6",
     text: {
       primary: "#f9fafb",
       secondary: "#d1d5db",
       inverse: "#111827",
+      light: "#f9fafb",
+      dark: "#111827",
     },
+    accent1: "#3b82f6",
+    accent2: "#8b5cf6",
+    accent3: "#ec4899",
   },
-};
+} as const;
 
 export type Colors = typeof colors;

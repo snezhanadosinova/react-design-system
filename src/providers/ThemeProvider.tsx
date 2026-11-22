@@ -9,11 +9,26 @@ interface ThemeProviderProps {
   defaultTheme?: ThemeMode;
 }
 
+const THEME_STORAGE_KEY = "react-design-system-theme";
+
+function getInitialTheme(defaultTheme: ThemeMode): ThemeMode {
+  if (typeof window === "undefined") return defaultTheme;
+
+  try {
+    const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return savedTheme === "light" || savedTheme === "dark"
+      ? savedTheme
+      : defaultTheme;
+  } catch {
+    return defaultTheme;
+  }
+}
+
 export function ThemeProvider({
   children,
   defaultTheme = "light",
 }: ThemeProviderProps) {
-  const [mode, setMode] = useState<ThemeMode>(defaultTheme);
+  const [mode, setMode] = useState<ThemeMode>(() => getInitialTheme(defaultTheme));
 
   const theme = useMemo(
     () => (mode === "light" ? lightTheme : darkTheme),
@@ -22,6 +37,11 @@ export function ThemeProvider({
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", mode);
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, mode);
+    } catch {
+      // Keep the selected theme for this session when storage is unavailable.
+    }
   }, [mode]);
 
   const toggleTheme = () => {

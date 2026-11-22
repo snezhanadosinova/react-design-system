@@ -3,7 +3,12 @@
   cursor: pointer;
   font-family: Inter, sans-serif;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--color-border-focus);
+  outline-offset: 2px;
 }
 
 /* =========================================================
@@ -40,7 +45,7 @@
 
 .success {
   background: var(--color-success);
-  color: var(--color-text-inverse);
+  color: var(--color-success-foreground);
 }
 
 .success:hover {
@@ -49,7 +54,7 @@
 
 .danger {
   background: var(--color-danger);
-  color: var(--color-text-inverse);
+  color: var(--color-danger-foreground);
 }
 
 .danger:hover {
@@ -58,7 +63,7 @@
 
 .warning {
   background: var(--color-warning);
-  color: var(--color-text-inverse);
+  color: var(--color-warning-foreground);
 }
 
 .warning:hover {
@@ -67,7 +72,7 @@
 
 .info {
   background: var(--color-info);
-  color: var(--color-text-inverse);
+  color: var(--color-info-foreground);
 }
 
 .info:hover {

@@ -28,7 +28,3 @@
 .danger {
   --divider-color: var(--color-danger);
 }
-
-.dark {
-  --divider-color: var(--color-border-dark);
-}

@@ -11,14 +11,14 @@
     "types": ["node"],
 
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
-
-    "strict": true
+    "strict": true,
+    "ignoreDeprecations": "6.0"
   },
-  
-"ignoreDeprecations": "6.0",
   "include": [
     "vite.config.ts",
+    "vite.lib.config.ts",
     ".storybook/main.ts",
     "scripts/**/*.ts"
   ]

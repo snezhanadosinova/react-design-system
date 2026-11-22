@@ -1,7 +1,10 @@
 import {
   forwardRef,
+  useId,
   type InputHTMLAttributes,
 } from "react";
+import { useFormField } from "../FormField/FormFieldContext";
+import { mergeDescribedBy } from "../../utils/accessibility";
 import styles from "./Checkbox.module.css";
 
 type CheckboxProps = Omit<
@@ -32,21 +35,26 @@ export const Checkbox = forwardRef<
   },
   ref,
 ) {
-  const messageId = id
-    ? `${id}-message`
-    : undefined;
+  const field = useFormField();
+  const generatedId = useId();
+  const controlId = id ?? field?.id ?? generatedId;
+  const effectiveError = error ?? field?.error;
+  const effectiveHelper = helperText ?? field?.helperText;
+  const isRequired = required ?? field?.required;
+  const messageId = field?.messageId ?? `${controlId}-message`;
 
-  const describedBy =
-    ariaDescribedBy ??
-    messageId;
+  const describedBy = mergeDescribedBy(
+    ariaDescribedBy,
+    effectiveError || effectiveHelper ? messageId : undefined,
+  );
 
   const invalid =
     ariaInvalid ??
-    (error ? true : undefined);
+    (effectiveError ? true : undefined);
 
   const ariaRequiredValue =
     ariaRequired ??
-    (required ? true : undefined);
+    (isRequired ? true : undefined);
 
   return (
     <div
@@ -67,11 +75,11 @@ export const Checkbox = forwardRef<
       >
         <input
           ref={ref}
-          id={id}
+          id={controlId}
           type="checkbox"
           className={styles.input}
           disabled={disabled}
-          required={required}
+          required={isRequired}
           aria-describedby={
             describedBy
           }
@@ -105,7 +113,7 @@ export const Checkbox = forwardRef<
           <span className={styles.text}>
             {label}
 
-            {required && (
+            {isRequired && (
               <span
                 className={styles.required}
                 aria-hidden="true"
@@ -117,17 +125,18 @@ export const Checkbox = forwardRef<
         )}
       </label>
 
-      {(error || helperText) && (
+      {!field?.messageId && (effectiveError || effectiveHelper) && (
         <div
           id={messageId}
           className={
-            error
+            effectiveError
               ? styles.error
               : styles.helper
           }
-          role={error ? "alert" : undefined}
+          role={effectiveError ? "status" : undefined}
+          aria-live={effectiveError ? "polite" : undefined}
         >
-          {error || helperText}
+          {effectiveError || effectiveHelper}
         </div>
       )}
     </div>

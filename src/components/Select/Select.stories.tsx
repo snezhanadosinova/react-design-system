@@ -75,6 +75,11 @@ export const Default: Story = {
     id: "framework",
     name: "framework",
   },
+  render: (args) => (
+    <FormField label="Framework" htmlFor="framework">
+      <Select {...args} />
+    </FormField>
+  ),
 };
 
 export const WithFormField: Story = {

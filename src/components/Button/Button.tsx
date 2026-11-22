@@ -13,13 +13,15 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 export function Button({
   variant = "primary",
   size = "md",
+  type = "button",
   fullWidth = false,
   className,
   disabled,
   ...props
 }: ButtonProps) {
   return (
-    <button data-test="my-button"
+    <button
+      type={type}
       className={[
         styles.button,
         styles[variant],

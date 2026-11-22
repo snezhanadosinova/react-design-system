@@ -1,8 +1,10 @@
 import {
   forwardRef,
+  useId,
   type TextareaHTMLAttributes,
 } from "react";
 import { useFormField } from "../FormField/FormFieldContext";
+import { mergeDescribedBy } from "../../utils/accessibility";
 import styles from "./Textarea.module.css";
 
 type TextareaProps =
@@ -15,6 +17,7 @@ export const Textarea = forwardRef<
   {
     className,
     id,
+    required: nativeRequired,
     "aria-describedby": ariaDescribedBy,
     "aria-invalid": ariaInvalid,
     "aria-required": ariaRequired,
@@ -23,18 +26,17 @@ export const Textarea = forwardRef<
   ref,
 ) {
   const field = useFormField();
+  const generatedId = useId();
 
-  const textareaId = id ?? field?.id;
+  const textareaId = id ?? field?.id ?? generatedId;
 
-  const describedBy =
-    ariaDescribedBy ??
-    field?.messageId;
+  const describedBy = mergeDescribedBy(ariaDescribedBy, field?.messageId);
 
   const invalid =
     ariaInvalid ??
     (field?.error ? true : undefined);
 
-  const required =
+  const ariaRequiredValue =
     ariaRequired ??
     (field?.required ? true : undefined);
 
@@ -51,7 +53,8 @@ export const Textarea = forwardRef<
           .join(" ")}
         aria-describedby={describedBy}
         aria-invalid={invalid}
-        aria-required={required}
+        required={nativeRequired ?? field?.required}
+        aria-required={ariaRequiredValue}
         {...props}
       />
     </div>

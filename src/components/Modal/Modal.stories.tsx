@@ -42,7 +42,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    render: (args) => {
+    render: function DefaultStory(args) {
         const [open, setOpen] = useState(false);
 
         return (
@@ -68,6 +68,23 @@ export const Default: Story = {
     },
 };
 
+export const InitiallyOpen: Story = {
+    args: {
+        open: true,
+        title: "Accessible dialog example",
+        description: "This story keeps the dialog open for inspection.",
+    },
+    render: function InitiallyOpenStory(args) {
+        const [open, setOpen] = useState(true);
+        return (
+            <Modal {...args} open={open} onClose={() => setOpen(false)}>
+                <p>Dialog content is available to keyboard and screen-reader users.</p>
+                <button type="button" onClick={() => setOpen(false)}>Continue</button>
+            </Modal>
+        );
+    },
+};
+
 export const WithFooter: Story = {
     args: {
         title: "Welcome to Modal Dialog",
@@ -75,7 +92,7 @@ export const WithFooter: Story = {
             "This is an overlay dialog that captures user attention.",
     },
 
-    render: (args) => {
+    render: function WithFooterStory(args) {
         const [open, setOpen] = useState(false);
 
         return (
@@ -125,7 +142,7 @@ export const Confirmation: Story = {
         description: "This action cannot be undone.",
     },
 
-    render: (args) => {
+    render: function ConfirmationStory(args) {
         const [open, setOpen] = useState(false);
 
         return (
@@ -177,7 +194,7 @@ export const LongContent: Story = {
         description: "Please read the following information.",
     },
 
-    render: (args) => {
+    render: function LongContentStory(args) {
         const [open, setOpen] = useState(false);
 
         return (

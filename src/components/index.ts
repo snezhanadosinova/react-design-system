@@ -1,5 +1,6 @@
 export * from "./Text";
 export * from "./Button";
+export * from "./Link/Link";
 export * from "./Input";
 export * from "./Card";
 export * from "./Stack";

@@ -1,8 +1,10 @@
 import {
   forwardRef,
+  useId,
   type SelectHTMLAttributes,
 } from "react";
 import { useFormField } from "../FormField/FormFieldContext";
+import { mergeDescribedBy } from "../../utils/accessibility";
 import styles from "./Select.module.css";
 
 export type SelectOption = {
@@ -26,6 +28,7 @@ export const Select = forwardRef<
     options,
     placeholder,
     id,
+    required: nativeRequired,
     className,
     "aria-describedby": ariaDescribedBy,
     "aria-invalid": ariaInvalid,
@@ -35,18 +38,17 @@ export const Select = forwardRef<
   ref,
 ) {
   const field = useFormField();
+  const generatedId = useId();
 
-  const selectId = id ?? field?.id;
+  const selectId = id ?? field?.id ?? generatedId;
 
-  const describedBy =
-    ariaDescribedBy ??
-    field?.messageId;
+  const describedBy = mergeDescribedBy(ariaDescribedBy, field?.messageId);
 
   const invalid =
     ariaInvalid ??
     (field?.error ? true : undefined);
 
-  const required =
+  const ariaRequiredValue =
     ariaRequired ??
     (field?.required ? true : undefined);
 
@@ -64,7 +66,8 @@ export const Select = forwardRef<
             .join(" ")}
           aria-describedby={describedBy}
           aria-invalid={invalid}
-          aria-required={required}
+          required={nativeRequired ?? field?.required}
+          aria-required={ariaRequiredValue}
           {...props}
         >
           {placeholder && (
@@ -83,12 +86,7 @@ export const Select = forwardRef<
           ))}
         </select>
 
-        <span
-          className={styles.arrow}
-          aria-hidden="true"
-        >
-          ▾
-        </span>
+        <span className={styles.arrow} aria-hidden="true" />
       </div>
     </div>
   );

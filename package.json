@@ -1,26 +1,44 @@
 {
   "name": "react-design-system",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
+  "description": "Accessible, themeable React components and design tokens",
   "type": "module",
+  "main": "./dist/react-design-system.js",
+  "module": "./dist/react-design-system.js",
+  "types": "./dist/types/index.d.ts",
+  "files": ["dist/react-design-system.js", "dist/style.css", "dist/types"],
+  "sideEffects": ["**/*.css"],
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/react-design-system.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-     "generate:tokens": "node scripts/generate-css-variables.js"
+    "generate:tokens": "node --experimental-strip-types scripts/generate-css-variables.ts"
   },
-  "dependencies": {
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.0.3",
     "@vitest/browser-playwright": "^4.1.10",
     "@vitest/coverage-v8": "^4.1.10",

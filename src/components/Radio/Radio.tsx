@@ -2,7 +2,8 @@ import {
     forwardRef,
     type InputHTMLAttributes,
 } from "react";
-import { useRadioGroup } from "./RadioGroup";
+import { useRadioGroup } from "./RadioGroupContext";
+import { mergeDescribedBy } from "../../utils/accessibility";
 import styles from "./Radio.module.css";
 
 export type RadioProps = Omit<
@@ -44,9 +45,10 @@ export const Radio = forwardRef<
     const radioRequired =
         required ?? group?.required;
 
-    const describedBy =
-        props["aria-describedby"] ??
-        group?.messageId;
+    const describedBy = mergeDescribedBy(
+        props["aria-describedby"],
+        group?.messageId,
+    );
 
     const invalid =
         props["aria-invalid"] ??

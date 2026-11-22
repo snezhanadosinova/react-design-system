@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
     Button,
     Card,
+    Link,
     Text,
     Stack,
     Grid,
@@ -22,15 +23,16 @@ import {
     Modal,
     Drawer,
 } from '../components';
-import { useTheme } from '../hooks';
+import { SiteLayout } from '../layout/SiteLayout';
 import styles from './HomePage.module.css';
 
 export function HomePage() {
-    const { mode, toggleTheme } = useTheme();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
+        message: '',
         framework: '',
         notifications: false,
         terms: false,
@@ -44,63 +46,53 @@ export function HomePage() {
     ];
 
     return (
-        <main className={styles.homePage}>
-            <div className={styles.themeSwitcher}>
-                <Button
-                    variant="ghost"
-                    onClick={toggleTheme}
-                    title={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
-                >
-                    {mode === 'light' ? '🌙 Dark' : '☀️ Light'}
-                </Button>
-            </div>
+        <SiteLayout mainId="top" mainClassName={styles.homePage}>
             {/* Hero Section */}
             <header className={styles.hero}>
-                <Stack gap="lg" align="center">
-                    <div className={styles.heroIcon}>✨</div>
-                    <Text variant="heading-1" className={styles.heroTitle}>
-                        React Design System
+                <Stack gap="md" align="start">
+                    <p className={styles.heroEyebrow}>Reusable React components</p>
+                    <Text as="h1" variant="heading-1" className={styles.heroTitle}>
+                        A practical foundation for product interfaces
                     </Text>
                     <Text variant="body-lg" className={styles.heroSubtitle}>
-                        Beautiful, reusable components built with React, TypeScript, and modern design principles
+                        Accessible controls, flexible layouts, and a small set of design tokens for consistent UI.
                     </Text>
                     <Stack direction="row" gap="md">
-                        <Button
-                            variant="primary"
-                            onClick={() => document.getElementById('components')?.scrollIntoView({ behavior: 'smooth' })}
-                        >
-                            Explore Components
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            onClick={() => document.getElementById('forms')?.scrollIntoView({ behavior: 'smooth' })}
-                        >
-                            Try the Form
-                        </Button>
+                        <Link href="#components" variant="primary-button">Explore components</Link>
+                        <Link href="#forms" variant="secondary-button">Try the form</Link>
                     </Stack>
                 </Stack>
             </header>
 
             {/* Features Overview */}
             <Section title="Key Features" subtitle="Everything you need to build modern UIs">
-                <Grid columns={4} gap="md">
-                    <FeatureCard icon="🎨" title="Themeable" description="Light and dark mode with CSS variables" />
-                    <FeatureCard icon="⚡" title="Fast" description="Built with Vite for lightning-fast development" />
-                    <FeatureCard icon="📦" title="Modular" description="Use only what you need, tree-shakeable" />
-                    <FeatureCard icon="🔒" title="Type Safe" description="Full TypeScript support throughout" />
+                <Grid columns={1} sm={2} lg={4} gap="md">
+                    <FeatureCard title="Themeable" description="Light and dark themes use the same token names." />
+                    <FeatureCard title="Reusable" description="Small components compose into common product patterns." />
+                    <FeatureCard title="Typed" description="Component props are defined with TypeScript." />
+                    <FeatureCard title="Documented" description="Stories show states, variants, and accessible usage." />
+                </Grid>
+            </Section>
+
+            <Section id="components" title="Component catalog" subtitle="Browse the examples by the work they support">
+                <Grid columns={1} sm={2} lg={4} gap="md">
+                    <CatalogCard title="Forms" description="Labels, inputs, selection, and validation." href="#forms" />
+                    <CatalogCard title="Actions and feedback" description="Buttons, badges, alerts, and loading states." href="#buttons" />
+                    <CatalogCard title="Layout and content" description="Cards, text, lists, grids, and spacing." href="#layouts" />
+                    <CatalogCard title="Overlays" description="Dialog and drawer patterns with keyboard support." href="#interactive" />
                 </Grid>
             </Section>
 
             {/* Typography Section */}
-            <Section title="Typography" subtitle="Text styles and variants">
+            <Section id="tokens" title="Typography" subtitle="Text styles and variants">
                 <Card className={styles.contentCard}>
-                    <Grid columns={2} gap="lg">
+                    <Grid columns={1} sm={2} gap="lg">
                         <div>
                             <Stack gap="md">
                                 <div className={styles.variantLabel}>Headings</div>
-                                <Text variant="heading-1">Heading 1</Text>
-                                <Text variant="heading-2">Heading 2</Text>
-                                <Text variant="heading-3">Heading 3</Text>
+                                <Text as="p" variant="heading-1">Heading 1</Text>
+                                <Text as="p" variant="heading-2">Heading 2</Text>
+                                <Text as="p" variant="heading-3">Heading 3</Text>
                             </Stack>
                         </div>
                         <div>
@@ -116,8 +108,8 @@ export function HomePage() {
             </Section>
 
             {/* Buttons Section */}
-            <Section id="components" title="Buttons" subtitle="Multiple variants and sizes">
-                <Grid columns={3} gap="md">
+            <Section id="buttons" title="Buttons" subtitle="Variants and sizes for common actions">
+                <Grid columns={1} sm={2} lg={3} gap="md">
                     <ComponentShowcase variant="primary" label="Primary">
                         <Stack gap="sm">
                             <Button variant="primary" size="sm">Small</Button>
@@ -157,11 +149,11 @@ export function HomePage() {
                         </Stack>
                     </ComponentShowcase>
 
-                    <ComponentShowcase variant="dark" label="Icon Buttons">
+                    <ComponentShowcase variant="dark" label="Compact Actions">
                         <Stack gap="sm">
-                            <Button size="sm">🔍 Search</Button>
-                            <Button size="sm">⭐ Save</Button>
-                            <Button size="sm">📤 Share</Button>
+                            <Button size="sm">Search</Button>
+                            <Button size="sm">Save</Button>
+                            <Button size="sm">Share</Button>
                         </Stack>
                     </ComponentShowcase>
                 </Grid>
@@ -187,10 +179,10 @@ export function HomePage() {
                         </div>
                         <Divider />
                         <div className={styles.profileRow}>
-                            <Avatar name="Priya Sharma" size="md" />
+                                <Avatar name="Morgan Ellis" size="md" />
                             <Stack gap="sm">
-                                <Text variant="heading-3">Priya Sharma</Text>
-                                <Text variant="body-sm">Design systems lead</Text>
+                                <Text as="h3" variant="heading-3">Morgan Ellis</Text>
+                                <Text variant="body-sm">Product designer</Text>
                             </Stack>
                             <Badge variant="success">Online</Badge>
                         </div>
@@ -203,7 +195,7 @@ export function HomePage() {
                 <Card className={styles.contentCard}>
                     <Stack gap="lg">
                         <div>
-                            <Text variant="heading-3" className={styles.subsectionTitle}>Status Badges</Text>
+                            <Text as="h3" variant="heading-3" className={styles.subsectionTitle}>Status Badges</Text>
                             <div className={styles.badgeContainer}>
                                 <Badge variant="default">Default</Badge>
                                 <Badge variant="success">Success</Badge>
@@ -217,7 +209,7 @@ export function HomePage() {
                         </div>
                         <Divider />
                         <div>
-                            <Text variant="heading-3" className={styles.subsectionTitle}>Use Cases</Text>
+                            <Text as="h3" variant="heading-3" className={styles.subsectionTitle}>Use Cases</Text>
                             <Stack gap="sm">
                                 <div className={styles.badgeRow}>
                                     <Text variant="body">Status: </Text>
@@ -249,90 +241,101 @@ export function HomePage() {
 
             {/* Form Components Section */}
             <Section id="forms" title="Form Components" subtitle="Input controls and interactive elements">
-                <Grid columns={2} gap="lg">
+                <form className={styles.demoForm} onSubmit={(event) => { event.preventDefault(); setFormSubmitted(true); }}>
+                <Grid columns={1} sm={2} gap="lg">
                     <Card className={styles.formCard}>
                         <Stack gap="lg">
-                            <Text variant="heading-3">Text Inputs</Text>
+                            <Text as="h3" variant="heading-3">Text Inputs</Text>
                             <FormField label="Email Address" helperText="We'll never share your email">
                                 <Input
                                     type="email"
+                                    name="email"
                                     placeholder="your@email.com"
                                     value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    onChange={(e) => { setFormData({ ...formData, email: e.target.value }); setFormSubmitted(false); }}
                                 />
                             </FormField>
 
                             <FormField label="Message">
-                                <Textarea placeholder="Type your message..." rows={4} />
+                                <Textarea
+                                    name="message"
+                                    placeholder="Type your message..."
+                                    rows={4}
+                                    value={formData.message}
+                                    onChange={(event) => { setFormData({ ...formData, message: event.target.value }); setFormSubmitted(false); }}
+                                />
                             </FormField>
                         </Stack>
                     </Card>
 
                     <Card className={styles.formCard}>
                         <Stack gap="lg">
-                            <Text variant="heading-3">Interactive Controls</Text>
+                            <Text as="h3" variant="heading-3">Interactive Controls</Text>
                             <FormField label="Choose Framework">
                                 <Select
-                                    id="framework"
                                     name="framework"
                                     options={selectOptions}
                                     placeholder="Select a framework"
                                     value={formData.framework}
-                                    onChange={(event) =>
+                                    onChange={(event) => {
                                         setFormData({
                                             ...formData,
                                             framework: event.target.value,
-                                        })
-                                    }
+                                        });
+                                        setFormSubmitted(false);
+                                    }}
                                 />
 
                             </FormField>
 
                             <FormField label="Enable Notifications">
                                 <Switch
+                                    name="notifications"
                                     checked={formData.notifications}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, notifications: e.target.checked })
-                                    }
+                                    onChange={(e) => { setFormData({ ...formData, notifications: e.target.checked }); setFormSubmitted(false); }}
                                 />
                             </FormField>
 
                             <FormField label="Accept Terms">
                                 <Checkbox
+                                    name="terms"
                                     checked={formData.terms}
-                                    onChange={(e) => setFormData({ ...formData, terms: e.target.checked })}
+                                    onChange={(e) => { setFormData({ ...formData, terms: e.target.checked }); setFormSubmitted(false); }}
                                 />
                             </FormField>
 
-                            <FormField label="Preferred plan">
-                                <RadioGroup name="plan" defaultValue="starter">
+                            <RadioGroup name="plan" label="Preferred plan" defaultValue="starter">
                                     <Stack gap="sm">
                                         <Radio value="starter" label="Starter" />
                                         <Radio value="team" label="Team" />
                                     </Stack>
-                                </RadioGroup>
-                            </FormField>
+                            </RadioGroup>
+                            <Stack direction="row" gap="md" align="center">
+                                <Button type="submit">Save preferences</Button>
+                                {formSubmitted && <Text role="status">Preferences saved for this demo.</Text>}
+                            </Stack>
                         </Stack>
                     </Card>
                 </Grid>
+                </form>
             </Section>
 
             {/* Cards & Layouts Section */}
-            <Section title="Cards & Grid Layouts" subtitle="Flexible layout components">
-                <Grid columns={3} gap="md">
+            <Section id="layouts" title="Cards & Grid Layouts" subtitle="Flexible layout components">
+                <Grid columns={1} sm={2} lg={3} gap="md">
                     {[
-                        { icon: '🎯', title: 'Component 1', desc: 'Build flexible layouts' },
-                        { icon: '🚀', title: 'Component 2', desc: 'Responsive design' },
-                        { icon: '💡', title: 'Component 3', desc: 'Best practices' },
-                    ].map((item, idx) => (
-                        <Card key={idx} className={styles.portfolioCard}>
+                        { icon: '#', title: 'Flexible layouts', desc: 'Compose cards and responsive grids', href: '#components' },
+                        { icon: '+', title: 'Responsive design', desc: 'Adapt content to each screen size', href: '#forms' },
+                        { icon: '=', title: 'Interactive patterns', desc: 'Explore dialogs and drawers', href: '#interactive' },
+                        ].map((item) => (
+                        <Card key={item.title} className={styles.portfolioCard}>
                             <Stack gap="md" align="center">
-                                <div className={styles.cardIcon}>{item.icon}</div>
-                                <Text variant="heading-3">{item.title}</Text>
+                                <div className={styles.cardIcon} aria-hidden="true">{item.icon}</div>
+                                <Text as="h3" variant="heading-3">{item.title}</Text>
                                 <Text variant="body-sm" className={styles.cardDescription}>
                                     {item.desc}
                                 </Text>
-                                <Button variant="primary" size="sm">Learn More</Button>
+                                <Link href={item.href} variant="primary-button">Browse</Link>
                             </Stack>
                         </Card>
                     ))}
@@ -344,10 +347,10 @@ export function HomePage() {
                 title="Lists"
                 subtitle="Organize content effectively"
             >
-                <Grid columns={2} gap="lg">
+                <Grid columns={1} sm={2} gap="lg">
                     <Card className={styles.contentCard}>
                         <Stack gap="lg">
-                            <Text variant="heading-3">
+                            <Text as="h3" variant="heading-3">
                                 Features Checklist
                             </Text>
 
@@ -373,7 +376,7 @@ export function HomePage() {
 
                     <Card className={styles.contentCard}>
                         <Stack gap="lg">
-                            <Text variant="heading-3">
+                            <Text as="h3" variant="heading-3">
                                 Getting Started Steps
                             </Text>
 
@@ -401,11 +404,11 @@ export function HomePage() {
 
 
             {/* Interactive Components */}
-            <Section title="Interactive Components" subtitle="Advanced UI patterns">
-                <Grid columns={3} gap="md">
+            <Section id="interactive" title="Interactive Components" subtitle="Advanced UI patterns">
+                <Grid columns={1} sm={2} lg={3} gap="md">
                     <Card className={`${styles.interactiveCard} ${styles.spinnerCard}`}>
                         <Stack gap="md" align="center">
-                            <Text variant="heading-3">Loading State</Text>
+                            <Text as="h3" variant="heading-3">Loading State</Text>
                             <div className={styles.spinnerContainer}>
                                 <Spinner />
                             </div>
@@ -415,7 +418,7 @@ export function HomePage() {
 
                     <Card className={`${styles.interactiveCard} ${styles.modalCard}`}>
                         <Stack gap="md" align="center">
-                            <Text variant="heading-3">Modal Dialog</Text>
+                            <Text as="h3" variant="heading-3">Modal Dialog</Text>
                             <Button variant="primary" onClick={() => setIsModalOpen(true)}>
                                 Open Modal
                             </Button>
@@ -425,7 +428,7 @@ export function HomePage() {
 
                     <Card className={`${styles.interactiveCard} ${styles.drawerCard}`}>
                         <Stack gap="md" align="center">
-                            <Text variant="heading-3">Drawer Panel</Text>
+                            <Text as="h3" variant="heading-3">Drawer Panel</Text>
                             <Button variant="secondary" onClick={() => setIsDrawerOpen(true)}>
                                 Open Drawer
                             </Button>
@@ -478,30 +481,15 @@ export function HomePage() {
                                     Side panel for navigation, filters, or additional content
                                 </Text>
                             </div>
+                            <nav aria-label="Drawer navigation">
                             <List variant="menu">
-                                <List.Item
-                                    icon="🏠"
-                                    selected
-                                >
-                                    Home
-                                </List.Item>
-
-                                <List.Item icon="📖">
-                                    Documentation
-                                </List.Item>
-
-                                <List.Item icon="🎨">
-                                    Design Tokens
-                                </List.Item>
-
-                                <List.Item icon="⚙️">
-                                    Settings
-                                </List.Item>
-
-                                <List.Item icon="📞">
-                                    Support
-                                </List.Item>
+                                <List.Item selected><a href="#top" aria-current="page">Home</a></List.Item>
+                                <List.Item><a href="/docs">Documentation</a></List.Item>
+                                <List.Item><a href="#tokens">Typography</a></List.Item>
+                                <List.Item><a href="#forms">Settings</a></List.Item>
+                                <List.Item ><a href="#footer">Support</a></List.Item>
                             </List>
+                            </nav>
                             <Button variant="primary" onClick={() => setIsDrawerOpen(false)} fullWidth>
                                 Close Drawer
                             </Button>
@@ -513,32 +501,18 @@ export function HomePage() {
             {/* CTA Section */}
             <section className={styles.ctaSection}>
                 <Stack gap="md" align="center">
-                    <Text variant="heading-2" weight="bold" color="light">Ready to Build?</Text>
+                    <Text as="h2" variant="heading-2" weight="bold" color="inverse">Ready to Build?</Text>
                     <Text variant="body-lg" className={styles.ctaText}>
                         Start using these components in your project today
                     </Text>
                     <Stack direction="row" gap="md">
-                        <Button variant="primary">Get Started</Button>
-                        <Button variant="secondary">View Docs</Button>
+                        <Link href="/getting-started" variant="primary-button">Get Started</Link>
+                        <Link href="/docs" variant="secondary-button">View Docs</Link>
                     </Stack>
                 </Stack>
             </section>
 
-            {/* Footer */}
-            <footer className={styles.footer}>
-                <Stack gap="md" align="center">
-                    <Text variant="heading-3">React Design System</Text>
-                    <Text variant="body-sm">
-                        Created by Snezhana Dosinova • Built with Vite, React & TypeScript
-                    </Text>
-
-                    <Divider />
-                    <div>
-                        <Text variant="body-sm">© 2026 • All rights reserved</Text>
-                    </div>
-                </Stack>
-            </footer>
-        </main>
+        </SiteLayout>
     );
 }
 
@@ -557,7 +531,7 @@ function Section({
     return (
         <section id={id} className={styles.section}>
             <Stack gap="sm" className={styles.sectionHeader}>
-                <Text variant="heading-2" className={styles.sectionTitle}>
+                <Text as="h2" variant="heading-2" className={styles.sectionTitle}>
                     {title}
                 </Text>
                 {subtitle && (
@@ -572,24 +546,33 @@ function Section({
 }
 
 function FeatureCard({
-    icon,
     title,
     description,
 }: {
-    icon: string;
     title: string;
     description: string;
 }) {
     return (
         <Card className={styles.featureCard}>
-            <Stack gap="md" align="center">
-                <div className={styles.featureIcon}>{icon}</div>
-                <Text variant="heading-3" className={styles.featureTitle}>
+            <Stack gap="sm" align="start">
+                <Text as="h3" variant="heading-3" className={styles.featureTitle}>
                     {title}
                 </Text>
                 <Text variant="body-sm" className={styles.featureDesc}>
                     {description}
                 </Text>
+            </Stack>
+        </Card>
+    );
+}
+
+function CatalogCard({ title, description, href }: { title: string; description: string; href: string }) {
+    return (
+        <Card className={styles.catalogCard}>
+            <Stack gap="sm" align="start">
+                <Text as="h3" variant="heading-3">{title}</Text>
+                <Text variant="body-sm">{description}</Text>
+                <Link href={href} variant="subtle">Browse section</Link>
             </Stack>
         </Card>
     );
@@ -616,7 +599,7 @@ function ComponentShowcase({
     return (
         <Card className={`${styles.showcase} ${variantColors[variant] || ''}`}>
             <Stack gap="md">
-                <Text variant="heading-3" className={styles.showcaseLabel}>
+                <Text as="h3" variant="heading-3" className={styles.showcaseLabel}>
                     {label}
                 </Text>
                 {children}

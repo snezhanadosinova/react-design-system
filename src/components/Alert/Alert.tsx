@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import styles from "./Alert.module.css";
 
 export type AlertType =
@@ -106,10 +106,15 @@ export function Alert({
   dismissible = false,
   onDismiss,
 }: AlertProps) {
+  const [dismissed, setDismissed] = useState(false);
+
+  if (dismissed) return null;
+
   return (
     <div
       className={`${styles.alert} ${styles[type]}`}
-      role="alert"
+      role={type === "error" ? "alert" : "status"}
+      aria-live={type === "error" ? "assertive" : "polite"}
     >
       <AlertIcon type={type} />
 
@@ -129,7 +134,10 @@ export function Alert({
         <button
           type="button"
           className={styles.close}
-          onClick={onDismiss}
+          onClick={() => {
+            onDismiss?.();
+            setDismissed(true);
+          }}
           aria-label="Dismiss alert"
         >
           <svg

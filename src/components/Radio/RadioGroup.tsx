@@ -1,28 +1,10 @@
 import {
-    createContext,
-    useContext,
     useId,
     useState,
     type ReactNode,
 } from "react";
+import { RadioGroupContext, type RadioGroupContextValue } from "./RadioGroupContext";
 import styles from "./RadioGroup.module.css";
-
-type RadioGroupContextValue = {
-    name: string;
-    value?: string;
-    disabled: boolean;
-    required: boolean;
-    error?: string;
-    messageId?: string;
-    onChange: (value: string) => void;
-};
-
-const RadioGroupContext =
-    createContext<RadioGroupContextValue | null>(null);
-
-export function useRadioGroup() {
-    return useContext(RadioGroupContext);
-}
 
 export type RadioGroupProps = {
     name: string;
@@ -60,7 +42,9 @@ export function RadioGroup({
         ? value
         : internalValue;
 
-    const messageId = `${generatedId}-message`;
+    const messageId = error || helperText
+        ? `${generatedId}-message`
+        : undefined;
 
     const handleChange = (nextValue: string) => {
         if (!isControlled) {
@@ -119,7 +103,8 @@ export function RadioGroup({
                                 ? styles.error
                                 : styles.helper
                         }
-                        role={error ? "alert" : undefined}
+                        role={error ? "status" : undefined}
+                        aria-live={error ? "polite" : undefined}
                     >
                         {error ?? helperText}
                     </div>

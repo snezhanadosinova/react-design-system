@@ -109,6 +109,11 @@ export const Default: Story = {
         type: "email",
         placeholder: "Enter your email",
     },
+    render: (args) => (
+        <FormField label="Email" htmlFor="email">
+            <Input {...args} />
+        </FormField>
+    ),
 };
 
 export const WithFormField: Story = {
